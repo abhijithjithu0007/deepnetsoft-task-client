@@ -43,16 +43,13 @@ export const CombinedMenuComponent: React.FC = () => {
     }
   };
 
-  // Find the current active menu to display its items
   const activeMenuData = menus.find((menu) => menu.id === activeMenuId);
   const menuItems = activeMenuData?.items || [];
 
   return (
     <div className="flex flex-col w-full min-h-screen">
-      {/* Tab Section */}
       <div className="relative w-full h-20 flex items-center justify-center bg-black bg-opacity-80">
-        {/* Background Image */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 opacity-60 bg-black">
           <img
             src="/assets/tabs.png"
             alt="Tabs Background"
@@ -60,16 +57,16 @@ export const CombinedMenuComponent: React.FC = () => {
           />
           <div className="absolute inset-0 bg-black opacity-60"></div>
         </div>
-
-        {/* Scroll buttons */}
         <button
-          className="relative z-20 px-2 text-white opacity-80 hover:opacity-100 flex items-center justify-center"
+          className="relative z-20 px-2 text-white opacity-80 hover:opacity-100 transition-opacity duration-200 flex items-center justify-center"
           onClick={scrollLeft}
+          aria-label="Scroll left"
         >
-          <ChevronLeft size={24} />
+          <ChevronLeft
+            size={24}
+            className="hover:scale-110 transition-transform"
+          />
         </button>
-
-        {/* Tabs */}
         <div
           ref={scrollContainerRef}
           className="relative z-20 flex space-x-6 px-4 overflow-x-auto scrollbar-hide"
@@ -84,22 +81,22 @@ export const CombinedMenuComponent: React.FC = () => {
             />
           ))}
         </div>
-
-        {/* Scroll buttons */}
         <button
-          className="relative z-20 px-2 text-white opacity-80 hover:opacity-100 flex items-center justify-center"
+          className="relative z-20 px-2 text-white opacity-80 hover:opacity-100 transition-opacity duration-200 flex items-center justify-center"
           onClick={scrollRight}
+          aria-label="Scroll right"
         >
-          <ChevronRight size={24} />
+          <ChevronRight
+            size={24}
+            className="hover:scale-110 transition-transform"
+          />
         </button>
 
-        <div className="relative z-20">
+        <div className="relative z-20 ml-2">
           <Addmenu />
         </div>
       </div>
-      {/* Menu Section */}
       <div className="relative text-white flex-grow flex flex-col items-center justify-center p-6">
-        {/* Background Image */}
         <div className="absolute inset-0">
           <img
             src="/assets/item-bg.png"
@@ -108,20 +105,21 @@ export const CombinedMenuComponent: React.FC = () => {
           />
           <div className="absolute inset-0 bg-black opacity-70"></div>
         </div>
-        {/* Content */}
-        <div className="relative border border-gray-400 p-6 w-full max-w-4xl bg-black bg-opacity-50 z-10">
-          {/* Title */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold tracking-wider">
-              <span className="inline-block mx-4">—</span>
-              <span className="text-red-500">{activeMenu}</span>
-              <span className="inline-block mx-4">—</span>
+        <div className="relative border border-gray-400 p-6 md:p-8 w-full max-w-4xl bg-transparent bg-opacity-50  z-10 shadow-2xl">
+          <div className="text-center mb-10">
+            <h1 className="text-3xl md:text-4xl font-bold tracking-wider font-serif">
+              <span className="inline-block mx-4 opacity-80">—</span>
+              <span
+                className="text-white text-3xl sm:text-5xl uppercase drop-shadow-md"
+                style={{ textShadow: "0 0 15px rgba(255, 105, 180, 0.7)" }}
+              >
+                {activeMenu}
+              </span>
+              <span className="inline-block mx-4 opacity-80">—</span>
             </h1>
           </div>
-
-          {/* Menu Items - Dynamically populated based on the active menu */}
           {menuItems.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
               {menuItems.map((item) => (
                 <MenuItemComponent
                   key={item.id}
@@ -132,15 +130,13 @@ export const CombinedMenuComponent: React.FC = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12">
-              <p className="text-xl text-gray-400">
+            <div className="text-center py-16">
+              <p className="text-xl text-gray-400 italic">
                 No items available in this menu
               </p>
             </div>
           )}
-
-          {/* Add Menu Items Component */}
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center mt-10">
             <AddMenuItems menuId={activeMenuId} />
           </div>
         </div>
@@ -158,14 +154,18 @@ const MenuItemComponent = ({
   price: number;
   description: string;
 }) => (
-  <div className="menu-item">
-    <div className="flex justify-between items-center w-full">
-      <h2 className="text-lg md:text-xl font-bold whitespace-nowrap">{name}</h2>
-      <div className="flex-grow border-b border-dotted border-gray-400 mx-2"></div>
+  <div className="menu-item group hover:translate-y-px transition-all duration-300">
+    <div className="flex justify-between items-center w-full mb-2">
+      <h2 className="text-lg md:text-xl uppercase font-bold whitespace-nowrap font-serif">
+        {name}
+      </h2>
+      <div className="flex-grow border-b border-dotted border-gray-400 mx-2 opacity-70"></div>
       <span className="text-lg md:text-xl font-bold whitespace-nowrap">
-        ${price}
+        ${price.toFixed(2)}
       </span>
     </div>
-    <p className="text-sm md:text-base text-gray-400">{description}</p>
+    <p className="text-sm md:text-base uppercase text-gray-400 font-light leading-relaxed">
+      {description}
+    </p>
   </div>
 );

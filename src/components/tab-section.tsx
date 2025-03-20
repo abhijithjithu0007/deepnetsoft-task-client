@@ -31,18 +31,15 @@ export const TabSection: React.FC<TabSectionProps> = ({
 
   return (
     <div className="relative w-full h-20 flex items-center justify-center bg-black bg-opacity-80">
-      {/* Background Image */}
       <div className="absolute inset-0">
         <img
           src="/assets/tabs.png"
           alt="Tabs Background"
-          className="w-full h-full object-cover"
+          className="w-full h-full"
         />
         <div className="absolute inset-0 bg-black opacity-60"></div>
       </div>
-
-      {/* Tabs */}
-      <div className="relative z-20 flex space-x-6 px-4 overflow-auto">
+      <div className="relative z-20 flex space-x-6 px-5 overflow-auto">
         {menus.map((menu, key) => (
           <Tab
             key={key}

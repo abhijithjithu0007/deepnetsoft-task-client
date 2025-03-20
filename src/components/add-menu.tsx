@@ -9,17 +9,18 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogFooter,
+  DialogClose,
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { PlusCircle } from "lucide-react";
 
 export function Addmenu() {
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useSelector((state: RootState) => state.menu);
 
-  // Define validation schema with Yup
   const validationSchema = Yup.object({
     name: Yup.string().trim().required("Menu name is required"),
     description: Yup.string().trim().required("Description is required"),
@@ -54,29 +55,36 @@ export function Addmenu() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="text-white">
-          Add Menu
+        <Button className="mr-2 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2 px-4 py-2">
+          <PlusCircle size={18} />
+          <span className="hidden md:block">Add Menu</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-white">
-        <DialogHeader>
-          <DialogTitle className="text-center">
-            Add Your New Menu Here
-          </DialogTitle>
-        </DialogHeader>
-        <form onSubmit={formik.handleSubmit}>
-          <div className="grid gap-4 py-4">
+      <DialogContent className="sm:max-w-[450px] bg-white rounded-xl shadow-xl border-0 p-0 overflow-hidden">
+        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-6">
+          <DialogHeader>
+            <DialogTitle className="text-center text-white text-xl font-bold">
+              Add Your New Menu
+            </DialogTitle>
+          </DialogHeader>
+        </div>
+        <form onSubmit={formik.handleSubmit} className="px-6">
+          <div className="grid gap-6 py-6">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
+              <Label
+                htmlFor="name"
+                className="text-right font-medium text-gray-700"
+              >
                 Name
               </Label>
               <div className="col-span-3">
                 <Input
                   id="name"
                   name="name"
-                  className={`col-span-3 ${
+                  placeholder="Enter menu name"
+                  className={`col-span-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ${
                     formik.touched.name && formik.errors.name
-                      ? "border-red-500"
+                      ? "border-red-500 focus:border-red-500 focus:ring-red-500"
                       : ""
                   }`}
                   onChange={formik.handleChange}
@@ -91,16 +99,20 @@ export function Addmenu() {
               </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="description" className="text-right">
+              <Label
+                htmlFor="description"
+                className="text-right font-medium text-gray-700"
+              >
                 Description
               </Label>
               <div className="col-span-3">
                 <Input
                   id="description"
                   name="description"
-                  className={`col-span-3 ${
+                  placeholder="Enter menu description"
+                  className={`col-span-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ${
                     formik.touched.description && formik.errors.description
-                      ? "border-red-500"
+                      ? "border-red-500 focus:border-red-500 focus:ring-red-500"
                       : ""
                   }`}
                   onChange={formik.handleChange}
@@ -115,13 +127,26 @@ export function Addmenu() {
               </div>
             </div>
           </div>
-          <DialogFooter>
+          <DialogFooter className="pb-6">
+            <DialogClose asChild>
+              <Button
+                type="button"
+                variant="outline"
+                className="border-gray-300 text-gray-700 hover:bg-gray-50"
+              >
+                Cancel
+              </Button>
+            </DialogClose>
             <Button
               type="submit"
-              variant="outline"
+              className={`bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-medium px-5 py-2 rounded-md shadow transition-all duration-300 ${
+                loading || !formik.isValid
+                  ? "opacity-70 cursor-not-allowed"
+                  : "hover:shadow-md"
+              }`}
               disabled={loading || !formik.isValid}
             >
-              {loading ? "Adding..." : "Add"}
+              {loading ? "Adding..." : "Add Menu"}
             </Button>
           </DialogFooter>
         </form>
