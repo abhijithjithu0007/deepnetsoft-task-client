@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { fetchMenus } from "../redux/features/menuSlice";
@@ -17,7 +17,7 @@ export const TabSection: React.FC<TabSectionProps> = ({
   setActiveMenuId,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { menus, loading } = useSelector((state: RootState) => state.menu);
+  const { menus } = useSelector((state: RootState) => state.menu);
   console.log(menus);
 
   useEffect(() => {

@@ -7,26 +7,13 @@ import { Addmenu } from "./add-menu";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { AddMenuItems } from "./add-menu-items";
 
-interface MenuItem {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-}
-
-interface Menu {
-  id: string;
-  name: string;
-  items: MenuItem[];
-}
-
 export const CombinedMenuComponent: React.FC = () => {
   const [activeMenu, setActiveMenu] = useState("");
   const [activeMenuId, setActiveMenuId] = useState("");
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch<AppDispatch>();
-  const { menus, loading } = useSelector((state: RootState) => state.menu);
+  const { menus } = useSelector((state: RootState) => state.menu);
 
   useEffect(() => {
     dispatch(fetchMenus());
