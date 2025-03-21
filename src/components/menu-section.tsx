@@ -49,14 +49,16 @@ export const CombinedMenuComponent: React.FC = () => {
   return (
     <div className="flex flex-col w-full min-h-screen">
       <div className="relative w-full h-20 flex items-center justify-center bg-black bg-opacity-80">
-        <div className="absolute inset-0 opacity-60 bg-black">
-          <img
-            src="/assets/tabs.png"
-            alt="Tabs Background"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black opacity-60"></div>
-        </div>
+        <div
+          className="absolute inset-0 opacity-60 bg-black"
+          style={{
+            backgroundImage: "url('/assets/tabs.png')",
+            backgroundRepeat: "repeat-x",
+            backgroundSize: "auto 100%",
+            backgroundPosition: "top left",
+          }}
+        ></div>
+
         <button
           className="relative z-20 px-2 text-white opacity-80 hover:opacity-100 transition-opacity duration-200 flex items-center justify-center"
           onClick={scrollLeft}
@@ -91,11 +93,11 @@ export const CombinedMenuComponent: React.FC = () => {
             className="hover:scale-110 transition-transform"
           />
         </button>
-
         <div className="relative z-20 ml-2">
           <Addmenu />
         </div>
       </div>
+
       <div className="relative text-white flex-grow flex flex-col items-center justify-center p-6">
         <div className="absolute inset-0">
           <img
